@@ -13,6 +13,7 @@ export interface Game { // with this we can use this interface else where in our
     name: string;
     background_image: string;
     parent_platforms: { platform: Platform }[];
+    metacritic: number;
 }
 
 interface FetchGamesResponse {
