@@ -2,9 +2,10 @@ import { useState, useEffect } from "react"
 import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
 
-interface Game {
+export interface Game { // with this we can use this interface else where in our code
     id: number;
     name: string;
+    background_image: string;
 }
 
 interface FetchGamesResponse {
@@ -27,7 +28,7 @@ const useGames = () => {
         apiClient.get<FetchGamesResponse>('/games', { signal: controller.signal })
             .then(res => setGames(res.data.results))
             .catch(err => {
-                if (err instanceof CanceledError) return
+                if (err instanceof CanceledError) return // since we are in strict mode it does it twice this makes it so it cancels the first time if it doesn't happen then we got to error message
                 setError(err.message)
             })
 
