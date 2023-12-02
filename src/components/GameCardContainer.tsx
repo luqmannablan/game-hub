@@ -9,7 +9,7 @@ const GameCardContainer = ({ children }: Props) => {
 
     // this is where we design the place for our cards
     return (
-        <Box width='300px' borderRadius='10px' overflow='hidden'>
+        <Box width='100%' borderRadius='10px' overflow='hidden'>
             {children}
         </Box>
     )
