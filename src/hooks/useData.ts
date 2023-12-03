@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
-import { CanceledError } from "axios";
+import { AxiosRequestConfig, CanceledError } from "axios";
 
 
 
@@ -8,7 +8,7 @@ interface FetchResponse<T> {
     count: number
     results: T[]
 }
-const useData = <T>(endpoint: string) => {
+const useData = <T>(endpoint: string, requestConfig?: AxiosRequestConfig, deps?: any[]) => {
 
     const [data, setData] = useState<T[]>([])
 
@@ -22,9 +22,10 @@ const useData = <T>(endpoint: string) => {
     useEffect(() => {
         const controller = new AbortController()
 
-
+        // we pass the genre as a query string parameter
         setLoading(true)
-        apiClient.get<FetchResponse<T>>(endpoint, { signal: controller.signal })
+        apiClient
+            .get<FetchResponse<T>>(endpoint, { signal: controller.signal, ...requestConfig })
             .then(res => {
                 setData(res.data.results)
                 setLoading(false)
@@ -39,7 +40,9 @@ const useData = <T>(endpoint: string) => {
 
         return () => controller.abort()
 
-    }, [])
+    }, deps ? [...deps] : [])
+    //
+    // we need to pass an array of dependencies so we need to get the games that match teh selected genre
 
     return { data, error, isLoading }
 }

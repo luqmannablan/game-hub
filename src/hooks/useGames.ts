@@ -1,5 +1,6 @@
 
 import useData from "./useData";
+import { Genre } from "./useGenres";
 
 // this interface is what is needed when getting the platform of the game
 export interface Platform {
@@ -17,9 +18,8 @@ export interface Game { // with this we can use this interface else where in our
     parent_platforms: { platform: Platform }[];
     metacritic: number;
 }
-
-
-const useGames = () => useData<Game>('/games')
+// open the data hook to make it flexible so we can add Genre parameter
+const useGames = (selectedGenre: Genre | null) => useData<Game>('/games', { params: { genres: selectedGenre?.id } }, [selectedGenre?.id])
 
 
 
