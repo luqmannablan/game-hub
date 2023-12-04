@@ -1,5 +1,6 @@
 import noImage from '../assets/no-image-placeholder-6f3882e0.webp'
 
+//because the no image is static we need to import it from the top
 const getCroppedImageUrl = (url: string) => {
     if (!url) return noImage
     const target = 'media/'
