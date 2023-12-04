@@ -19,7 +19,14 @@ export interface Game { // with this we can use this interface else where in our
     metacritic: number;
 }
 // open the data hook to make it flexible so we can add Genre parameter
-const useGames = (selectedGenre: Genre | null) => useData<Game>('/games', { params: { genres: selectedGenre?.id } }, [selectedGenre?.id])
+const useGames = (selectedGenre: Genre | null, selectedPlatform: Platform | null) => (
+    useData<Game>('/games', {
+        params: {
+            genres: selectedGenre?.id, platforms: selectedPlatform?.id
+        }
+    },
+        [selectedGenre?.id, selectedPlatform?.id]
+    ))
 
 
 
